@@ -1,0 +1,198 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Ejemplo tamblero 2\"\n",
+        "author: \"Ty Coon\"\n",
+        "format: \n",
+        "  dashboard:\n",
+        "    theme: [yeti, custom.scss]\n",
+        "---"
+      ],
+      "id": "0e4d0d56"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": [
+          "parameters"
+        ]
+      },
+      "source": [
+        "# to render w/ a different ticker parameter:\n",
+        "# quarto render dashboard.qmd -P ticker:GOOG\n",
+        "\n",
+        "ticker = \"BA\""
+      ],
+      "id": "da90bef1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import helpers\n",
+        "stock = helpers.get_stock(ticker)\n",
+        "data = helpers.get_data(stock)"
+      ],
+      "id": "e10dfdd7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Row"
+      ],
+      "id": "66cb634c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from IPython.display import Markdown\n",
+        "Markdown(\"**{symbol}** --- {longName} --- [{website}]({website})\"\n",
+        "    .format(**stock.info))"
+      ],
+      "id": "10800821",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Row"
+      ],
+      "id": "7f8b543b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "content": "valuebox",
+        "title": "Current Price"
+      },
+      "source": [
+        "dict(\n",
+        "    icon = \"currency-dollar\",\n",
+        "    color = \"secondary\",\n",
+        "    value = helpers.get_price(data)\n",
+        ")"
+      ],
+      "id": "f45d1ea2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "content": "valuebox",
+        "title": "Change"
+      },
+      "source": [
+        "change = helpers.get_change(data)\n",
+        "dict(\n",
+        "    value = change['amount'],\n",
+        "    icon = change['icon'],\n",
+        "    color = change['color']\n",
+        ") "
+      ],
+      "id": "2e4760c3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "content": "valuebox",
+        "title": "Percent Change"
+      },
+      "source": [
+        "dict(\n",
+        "    icon = \"percent\",\n",
+        "    color = \"light\",\n",
+        "    value = change['percent'],\n",
+        ") "
+      ],
+      "id": "3ec61927",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Row\n",
+        "\n",
+        "### Column {width=75%}"
+      ],
+      "id": "2a7a9f6e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "title": "Price History",
+        "padding": 0
+      },
+      "source": [
+        "helpers.make_candlestick_chart(data, ticker.upper())"
+      ],
+      "id": "9a921b01",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Column {width=25%}"
+      ],
+      "id": "9a505384"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ohlc = helpers.make_OHLC_table(data)"
+      ],
+      "id": "90c9e40e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.card}\n",
+        "\n",
+        "#### Last Close: `{python} ohlc['date']`\n",
+        "\n",
+        "| Close\t | `{python} ohlc['close']`  |\n",
+        "|:-------|--------------------------:|\n",
+        "| Open\t | `{python} ohlc['open']`   |\n",
+        "| High\t | `{python} ohlc['high']`   |\n",
+        "| Low\t | `{python} ohlc['low']`    |\n",
+        "| Volume | `{python} ohlc['volume']` |\n",
+        ": {.striped}\n",
+        "\n",
+        ":::\n"
+      ],
+      "id": "b57c0854"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "c:\\Users\\andre\\VanDerWaals_ejemplo\\.venv\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

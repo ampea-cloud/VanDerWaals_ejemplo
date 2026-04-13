@@ -1,0 +1,106 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Mi primer tablero\n",
+        "author: Andrea Amador\n",
+        "format:    \n",
+        "    dashboard:\n",
+        "        embed-resources: true\n",
+        "theme:\n",
+        "  light: flatly\n",
+        "  dark: darkly\n",
+        "---"
+      ],
+      "id": "d56bb9df"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotly.express as px\n",
+        "df = px.data.gapminder()"
+      ],
+      "id": "616e62f6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Row {height=60%}"
+      ],
+      "id": "10a7aacf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "title": "GDP and Life Expectancy"
+      },
+      "source": [
+        "px.scatter(  \n",
+        "  df, x=\"gdpPercap\", y=\"lifeExp\", \n",
+        "  animation_frame=\"year\", animation_group=\"country\", \n",
+        "  size=\"pop\", color=\"continent\", hover_name=\"country\",\n",
+        "  facet_col=\"continent\", log_x=True, size_max=45, \n",
+        "  range_x=[100,100000], range_y=[25,90] \n",
+        ")  "
+      ],
+      "id": "cef38b58",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Row {height=40%}"
+      ],
+      "id": "75f7bbb7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "title": "Population"
+      },
+      "source": [
+        "px.area(\n",
+        "  df, x=\"year\", y=\"pop\", \n",
+        "  color=\"continent\", line_group=\"country\"\n",
+        ")"
+      ],
+      "id": "f20d9e8d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "title": "Life Expectancy"
+      },
+      "source": [
+        "px.line(\n",
+        "  df, x=\"year\", y=\"lifeExp\", \n",
+        "  color=\"continent\", line_group=\"country\"\n",
+        ")"
+      ],
+      "id": "9cca53cb",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\andre\\VanDerWaals_ejemplo\\.venv\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
